@@ -17,30 +17,49 @@
 
         
         <script>
-            let canvas = document.getElementById{'mycanvas'};
-            console.log(canvas);
+            let canvas = document.getElementById('mycanvas');
+            //console.log(canvas);
             let pen = canvas.getContext('2d');
-            draw
+            pen.fillRect(10,10,20,20);
 
-            let box ={
+            let player ={
                 x: 150,
                 y: 150,
                 w: 60,
                 h: 60,
+                speed: 5,
+            }
+            let enemy ={
+                x: 150,
+                y: 150,
+                w: 60,
+                h: 60,
+                speed: 5,
             }
 
+            let gameH = canvas.height;
+            let gameW = canvas.width;
+
             function draw(){
-                console.log("draw");
+                pen.clearRect(0,0,gameW,gameH);
+                //console.log("draw");
+                pen.fillStyle = "green";
+                pen.fillRect(enemy.x, enemy.y, enemy.w, enemy.h);
             }
 
             function update(){
-                console.log("update");
+                //console.log("update");
+                enemy.y += enemy.speed;
+                if(enemy.y == gameH - enemy.h  || enemy.y <= 0 ){
+                    enemy.speed *= -1;
+                }
             }
 
             function render(){
                 draw();
                 update();
-                render();
+                //60fps
+                window.requestAnimationFrame(render);
             } 
             
             render();
