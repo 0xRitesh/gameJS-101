@@ -21,16 +21,21 @@
             //console.log(canvas);
             let pen = canvas.getContext('2d');
             pen.fillRect(10,10,20,20);
-            
+            let gameH = canvas.height;
+            let gameW = canvas.width;
             let enemyImg = new Image;
             enemyImg.src="assets/img1.png";
 
+            let playerImg = new Image;
+            playerImg.src="assets/img2.png";
+
             let player ={
                 x: 0,
-                y: gameH/2 - 30,
+                y: gameH/2 - 20,
                 w: 60,
                 h: 60,
                 speed: 5,
+                isMoving : false,
             }
             let enemy ={
                 x: 150,
@@ -40,18 +45,31 @@
                 speed: 5,
             }
 
-            let gameH = canvas.height;
-            let gameW = canvas.width;
+            canvas.addEventListener('mousedown', function(){
+                player.isMoving = true; 
+                //player.x = player.x + player.speed;
+            });
+            canvas.addEventListener('mouseup',function(){
+                player.isMoving = false;
+            })
 
+            
+
+            //-------------------------//
             function draw(){
                 pen.clearRect(0,0,gameW,gameH);
                 //console.log("draw");
                 //pen.fillStyle = "green";
-                //pen.fillRect(enemy.x, enemy.y, enemy.w, enemy.h);
+                //pen.fillRect(player.x, player.y, player.w, player.h);
+                pen.drawImage(playerImg, player.x, player.y, player.w, player.h);
                 pen.drawImage(enemyImg, enemy.x, enemy.y, enemy.w, enemy.h);
             }
 
             function update(){
+                if(player.isMoving == true){
+                    player.x += player.speed;
+                }
+
                 //console.log("update");
                 enemy.y += enemy.speed;
                 if(enemy.y == gameH - enemy.h  || enemy.y <= 0 ){
