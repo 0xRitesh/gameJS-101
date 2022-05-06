@@ -56,6 +56,15 @@
             
 
             //-------------------------//
+            function isColliding(r1,r2){
+                let side = r1.w;
+                if( Math.abs(r1.x - r2.x)  <= side && Math.abs(r1.y - r2.y) <= side){
+                    return true;
+                }
+                return false;
+            }
+            
+            
             function draw(){
                 pen.clearRect(0,0,gameW,gameH);
                 //console.log("draw");
@@ -64,6 +73,7 @@
                 pen.drawImage(playerImg, player.x, player.y, player.w, player.h);
                 pen.drawImage(enemyImg, enemy.x, enemy.y, enemy.w, enemy.h);
             }
+
 
             function update(){
                 if(player.isMoving == true){
@@ -75,7 +85,13 @@
                 if(enemy.y == gameH - enemy.h  || enemy.y <= 0 ){
                     enemy.speed *= -1;
                 }
+                if (isColliding(enemy,player)){
+                    console.log("Collision")
+                }
+
             }
+
+
 
             function render(){
                 draw();
