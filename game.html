@@ -9,6 +9,8 @@
         <style>
             canvas{
                 border:5px solid purple;
+                background :url("") ;
+                background-size: cover;
             }
         </style>
     </head>
@@ -23,6 +25,8 @@
             pen.fillRect(10,10,20,20);
             let gameH = canvas.height;
             let gameW = canvas.width;
+            let gameOver = false;
+
             let enemyImg = new Image;
             enemyImg.src="assets/img1.png";
 
@@ -72,6 +76,8 @@
                 //pen.fillRect(player.x, player.y, player.w, player.h);
                 pen.drawImage(playerImg, player.x, player.y, player.w, player.h);
                 pen.drawImage(enemyImg, enemy.x, enemy.y, enemy.w, enemy.h);
+                pen.fillText('Score ' + player.x, 10, 15);
+                pen.fillStyle = "red";
             }
 
 
@@ -86,7 +92,13 @@
                     enemy.speed *= -1;
                 }
                 if (isColliding(enemy,player)){
-                    console.log("Collision")
+                    //console.log("Collision");
+                    alert("GAME OVER");
+                    gameOver = true;
+                }
+                if(player.x > gameW - player.w){
+                    alert("YOU WON");
+                    gameOver = true;
                 }
 
             }
@@ -96,8 +108,11 @@
             function render(){
                 draw();
                 update();
+                console.log("in render");
                 //60fps
+                if(!gameOver){
                 window.requestAnimationFrame(render);
+                }
             } 
             
             render();
